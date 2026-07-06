@@ -1594,13 +1594,17 @@ rsvpForm.addEventListener('submit', async (e) => {
 
     try {
         const host = window.location.hostname;
-        const port = window.location.port;
-        
-        // If loaded via python local server (port 3000), redirect API to backend (port 5001)
-        // Otherwise, use relative path (works for localhost:5001 and production Render backend)
-        const apiEndpoint = (host === 'localhost' || host === '127.0.0.1') && port === '3000'
-            ? 'http://localhost:5001/api/rsvp'
-            : '/api/rsvp';
+        const isLocal = host === 'localhost' || 
+                        host === '127.0.0.1' || 
+                        host === '' || 
+                        host.startsWith('192.168.') || 
+                        host.startsWith('10.') || 
+                        host.startsWith('172.') || 
+                        host.endsWith('.local');
+                        
+        const apiEndpoint = isLocal 
+            ? 'http://' + (host || 'localhost') + ':5001/api/rsvp' 
+            : 'https://wedding-r6h7.onrender.com/api/rsvp';
 
         const res = await fetch(apiEndpoint, { 
             method: 'POST', 

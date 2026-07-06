@@ -97,9 +97,10 @@ app.get('/api/rsvps', async (req, res) => {
   }
 });
 
-// Serve static files from frontend directory
-const path = require('path');
-app.use(express.static(path.join(__dirname, '../frontend')));
+// Root Route
+app.get('/', (req, res) => {
+  res.send('Abhishek & Neha Wedding RSVP API is running.');
+});
 
 // Start Server
 app.listen(PORT, () => {

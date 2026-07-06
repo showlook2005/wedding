@@ -461,13 +461,17 @@
             try {
                 // Determine API endpoint: checks environment/URL or defaults to localhost
                 const host = window.location.hostname;
-                const port = window.location.port;
-                
-                // If loaded via python local server (port 3000), redirect API to backend (port 5001)
-                // Otherwise, use relative path (works for localhost:5001 and production Render backend)
-                const endpoint = (host === 'localhost' || host === '127.0.0.1') && port === '3000'
-                    ? 'http://localhost:5001/api/rsvps'
-                    : '/api/rsvps';
+                const isLocal = host === 'localhost' || 
+                                host === '127.0.0.1' || 
+                                host === '' || 
+                                host.startsWith('192.168.') || 
+                                host.startsWith('10.') || 
+                                host.startsWith('172.') || 
+                                host.endsWith('.local');
+                                
+                const endpoint = isLocal 
+                    ? 'http://' + (host || 'localhost') + ':5001/api/rsvps' 
+                    : 'https://wedding-r6h7.onrender.com/api/rsvps';
 
                 const response = await fetch(endpoint, {
                     method: 'GET',

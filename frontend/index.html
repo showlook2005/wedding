@@ -576,55 +576,7 @@
         .event-sep-dot  { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
 
         /* ============================================================
-           RSVP SECTION
-        ============================================================ */
-        #rsvp-section { padding: 5rem 1.5rem; background: var(--cream-2); }
-        .rsvp-form { max-width: 520px; margin: 0 auto; }
-        .form-card { background: var(--white); border: 1px solid var(--border); border-radius: 1.5rem; padding: 2rem; margin-bottom: 1.25rem; box-shadow: 0 4px 24px rgba(92,34,51,0.05); transition: opacity 0.3s ease; }
-        .form-card-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.3rem; font-weight: 600; color: var(--terracotta); margin-bottom: 0.35rem; }
-        .form-card-subtitle { font-size: 0.9rem; color: var(--text-light); margin-bottom: 1.25rem; }
-        .field-label { font-family: 'Tenor Sans', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-light); display: block; margin-bottom: 0.4rem; }
-        
-        .field-input { width: 100%; background: var(--cream); border: 0; border-bottom: 1.5px solid var(--border); padding: 0.6rem 0.25rem; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--text-dark); outline: none; transition: border-color 0.2s ease; }
-        .field-input:focus { border-color: var(--terracotta); }
-        select.field-input { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23B85940' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 12px; padding-right: 2rem; cursor: pointer; }
-        
-        .field-group { margin-bottom: 1.25rem; }
-        .radio-pill { display: inline-flex; flex: 1; align-items: center; justify-content: center; padding: 0.75rem 1.25rem; border: 1.5px solid var(--border); border-radius: 9999px; cursor: pointer; font-family: 'Tenor Sans', sans-serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-mid); transition: all 0.25s ease; text-align: center; }
-        .radio-pill input[type="radio"] { display: none; }
-        .radio-pill.selected, .radio-pill:has(input:checked) { background: var(--terracotta); border-color: var(--terracotta); color: white; }
-        .radio-pill-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-        .checkbox-pill { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; border: 1.5px solid var(--border); border-radius: 0.75rem; cursor: pointer; transition: all 0.25s ease; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-mid); text-align: left; }
-        .checkbox-pill input[type="checkbox"] { display: none; }
-        .checkbox-pill:has(input:checked) { background: var(--terracotta); border-color: var(--terracotta); color: white; }
-        .checkbox-pill:has(input:checked) small { color: rgba(255,255,255,0.85); }
-        .checkbox-row { display: flex; flex-direction: column; gap: 0.6rem; }
-        .checkbox-date { font-family: 'Tenor Sans', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; opacity: 0.7; display: block; margin-top: 0.2rem; transition: color 0.25s ease; }
-
-        .circle-select { display: flex; gap: 1.5rem; justify-content: center; }
-        .circle-opt { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; cursor: pointer; }
-        .circle-opt input { display: none; }
-        .circle-face { width: 60px; height: 60px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--cream); display: flex; align-items: center; justify-content: center; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--terracotta); transition: all 0.25s ease; }
-        .circle-opt:has(input:checked) .circle-face { background: var(--terracotta); border-color: var(--terracotta); color: white; box-shadow: 0 4px 16px rgba(184,89,64,0.35); }
-        .circle-opt-label { font-family: 'Tenor Sans', sans-serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-light); }
-
-        .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-        .mood-opt { cursor: pointer; border: 1.5px solid var(--border); border-radius: 0.75rem; padding: 1rem 0.75rem; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--text-mid); transition: all 0.25s ease; }
-        .mood-opt input { display: none; }
-        .mood-opt:has(input:checked) { background: var(--terracotta); border-color: var(--terracotta); color: white; }
-
-        .text-area { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.85rem 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-dark); outline: none; resize: none; transition: border-color 0.2s ease; line-height: 1.5; }
-        .text-area:focus { border-color: var(--terracotta); }
-
-        .submit-btn { width: 100%; background: var(--terracotta); color: white; border: none; border-radius: 9999px; padding: 1.1rem; font-family: 'Tenor Sans', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 6px 24px rgba(184,89,64,0.35); position: relative; overflow: hidden; }
-        .submit-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent); transform: translateX(-100%); transition: transform 0.5s ease; }
-        .submit-btn:hover::after { transform: translateX(100%); }
-        .submit-btn:hover { background: var(--terra-dark); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(184,89,64,0.45); }
-        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-
-        /* ============================================================
-           FOOTER & MODAL
+           FOOTER
         ============================================================ */
         #footer-section { 
             background: var(--burgundy); 
@@ -637,16 +589,6 @@
             justify-content: center; 
             align-items: center; 
         }
-        #rsvp-modal { position: fixed; inset: 0; background: rgba(30,10,5,0.65); backdrop-filter: blur(10px); z-index: 9000; display: none; align-items: center; justify-content: center; padding: 1.5rem; }
-        #rsvp-modal.open { display: flex; }
-        .modal-card { background: var(--white); border-radius: 1.5rem; max-width: 360px; width: 100%; padding: 2.5rem 2rem 2rem; text-align: center; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.25); animation: modalIn 0.4s cubic-bezier(0.16,1,0.3,1) both; }
-        @keyframes modalIn { from { opacity:0; transform: scale(0.9) translateY(20px); } to { opacity:1; transform: scale(1) translateY(0); } }
-        .modal-icon-ring { width: 72px; height: 72px; border-radius: 50%; background: rgba(184,89,64,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
-        .modal-icon-ring svg { width: 32px; color: var(--terracotta); }
-        .modal-title { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--terracotta); margin-bottom: 0.5rem; }
-        .modal-msg { font-style: italic; color: var(--text-light); font-size: 1rem; line-height: 1.6; margin-bottom: 1.75rem; }
-        .modal-close-btn { background: var(--terracotta); color: white; border: none; border-radius: 9999px; padding: 0.85rem 2.5rem; font-family: 'Tenor Sans', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; width: 100%; }
-        .modal-close-btn:hover { background: var(--terra-dark); }
         
         video[data-src] { background: #1a0d08; }
     </style>

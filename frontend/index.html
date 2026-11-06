@@ -559,15 +559,15 @@
 
         .carousel-3d-card {
             position: absolute;
-            width: 320px;
-            max-width: 80vw;
-            height: 460px;
+            width: 350px;
+            max-width: 84vw;
+            height: 450px;
             border-radius: 2rem;
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 9px;
-            border: 1.5px solid rgba(201, 150, 62, 0.45);
+            border: 1.5px solid rgba(201, 150, 62, 0.5);
             box-shadow: 0 18px 45px rgba(92, 34, 51, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.7);
             cursor: pointer;
             transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
@@ -630,41 +630,49 @@
             pointer-events: none;
         }
 
-        /* 3D Sheen / Glare reflection on card */
-        .card-glare {
-            position: absolute;
-            inset: 0;
-            border-radius: 2rem;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.5) 0%, transparent 60%);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            mix-blend-mode: overlay;
-            z-index: 15;
-        }
-        .carousel-3d-card.pos-active:hover .card-glare {
-            opacity: 1;
-        }
-
         .card-inner-media {
             width: 100%;
             height: 100%;
             border-radius: 1.5rem;
             overflow: hidden;
             position: relative;
-            background: #1a0d08;
+            background: #180c07;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .card-inner-media img {
-            width: 100%;
-            height: 100%;
+        /* Ambient blurred background matching the photo's palette */
+        .card-img-blur {
+            position: absolute;
+            inset: -20px;
+            width: calc(100% + 40px);
+            height: calc(100% + 40px);
             object-fit: cover;
+            filter: blur(28px) brightness(0.65) saturate(1.2);
+            transform: scale(1.15);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Main photograph — 100% fully visible, no cropping */
+        .card-img-main {
+            position: relative;
+            z-index: 2;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
             display: block;
             pointer-events: none;
-            transition: transform 0.6s ease;
+            transition: transform 0.5s ease;
+            border-radius: 0.65rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
-        .carousel-3d-card.pos-active:hover .card-inner-media img {
-            transform: scale(1.03);
+
+        .carousel-3d-card.pos-active:hover .card-img-main {
+            transform: scale(1.02);
         }
 
         .card-overlay-badge {
@@ -672,7 +680,7 @@
             top: 14px;
             left: 14px;
             padding: 5px 13px;
-            background: rgba(255, 248, 243, 0.92);
+            background: rgba(255, 248, 243, 0.94);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(201, 150, 62, 0.5);
@@ -682,8 +690,8 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--terracotta);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            z-index: 5;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -694,37 +702,6 @@
             height: 5px;
             border-radius: 50%;
             background: var(--gold);
-        }
-
-        .card-caption-banner {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 3rem 1.25rem 1.35rem;
-            background: linear-gradient(to top, rgba(20,9,5,0.88) 0%, rgba(20,9,5,0.45) 60%, transparent 100%);
-            color: white;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .card-caption-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2rem;
-            color: var(--gold-light);
-            line-height: 1.1;
-            margin: 0;
-        }
-
-        .card-caption-sub {
-            font-family: 'Tenor Sans', sans-serif;
-            font-size: 0.65rem;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.88);
-            margin: 0;
         }
 
         .carousel-nav-btn {
@@ -788,8 +765,8 @@
         }
 
         @media (max-width: 600px) {
-            .carousel-3d-stage { height: 440px; }
-            .carousel-3d-card { width: 275px; height: 405px; border-radius: 1.75rem; }
+            .carousel-3d-stage { height: 420px; }
+            .carousel-3d-card { width: 310px; max-width: 86vw; height: 395px; border-radius: 1.75rem; }
             .carousel-3d-card.pos-prev { transform: translate3d(-46%, 0, -45px) scale(0.85) rotateY(14deg); }
             .carousel-3d-card.pos-next { transform: translate3d(46%, 0, -45px) scale(0.85) rotateY(-14deg); }
             .carousel-nav-btn { display: none; }
@@ -1000,65 +977,45 @@
                 <div class="carousel-3d-card" data-index="0">
                     <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 01</span>
                     <div class="card-inner-media">
-                        <img src="assets/moment_chapter1.jpg" alt="Neha & Abhishek - Chapter 01" loading="eager">
-                        <div class="card-caption-banner">
-                            <p class="card-caption-title">Two Souls, One Destiny</p>
-                            <p class="card-caption-sub">Neha & Abhishek</p>
-                        </div>
+                        <img class="card-img-blur" src="assets/moment_chapter1.jpg" alt="" aria-hidden="true">
+                        <img class="card-img-main" src="assets/moment_chapter1.jpg" alt="Neha & Abhishek - Chapter 01" loading="eager">
                     </div>
-                    <div class="card-glare"></div>
                 </div>
 
                 <!-- Chapter 02: Family Blessings & Parents -->
                 <div class="carousel-3d-card" data-index="1">
                     <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 02</span>
                     <div class="card-inner-media">
-                        <img src="assets/moment_chapter2.jpg" alt="Family Blessings - Chapter 02" loading="lazy">
-                        <div class="card-caption-banner">
-                            <p class="card-caption-title">Family & Blessings</p>
-                            <p class="card-caption-sub">Roots of Love & Tradition</p>
-                        </div>
+                        <img class="card-img-blur" src="assets/moment_chapter2.jpg" alt="" aria-hidden="true">
+                        <img class="card-img-main" src="assets/moment_chapter2.jpg" alt="Family Blessings - Chapter 02" loading="lazy">
                     </div>
-                    <div class="card-glare"></div>
                 </div>
 
                 <!-- Chapter 03: A Lifetime of Smiles -->
                 <div class="carousel-3d-card" data-index="2">
                     <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 03</span>
                     <div class="card-inner-media">
-                        <img src="assets/moment_chapter3.jpg" alt="A Lifetime of Smiles - Chapter 03" loading="lazy">
-                        <div class="card-caption-banner">
-                            <p class="card-caption-title">A Lifetime of Smiles</p>
-                            <p class="card-caption-sub">Forever By Your Side</p>
-                        </div>
+                        <img class="card-img-blur" src="assets/moment_chapter3.jpg" alt="" aria-hidden="true">
+                        <img class="card-img-main" src="assets/moment_chapter3.jpg" alt="A Lifetime of Smiles - Chapter 03" loading="lazy">
                     </div>
-                    <div class="card-glare"></div>
                 </div>
 
                 <!-- Chapter 04: Joyful Celebrations & Family -->
                 <div class="carousel-3d-card" data-index="3">
                     <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 04</span>
                     <div class="card-inner-media">
-                        <img src="assets/moment_chapter4.jpg" alt="Joyful Celebrations - Chapter 04" loading="lazy">
-                        <div class="card-caption-banner">
-                            <p class="card-caption-title">Joyful Celebrations</p>
-                            <p class="card-caption-sub">Surrounded by Loved Ones</p>
-                        </div>
+                        <img class="card-img-blur" src="assets/moment_chapter4.jpg" alt="" aria-hidden="true">
+                        <img class="card-img-main" src="assets/moment_chapter4.jpg" alt="Joyful Celebrations - Chapter 04" loading="lazy">
                     </div>
-                    <div class="card-glare"></div>
                 </div>
 
                 <!-- Chapter 05: The Sacred Union -->
                 <div class="carousel-3d-card" data-index="4">
                     <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 05</span>
                     <div class="card-inner-media">
-                        <img src="assets/moment_chapter5.jpg" alt="The Sacred Union - Chapter 05" loading="lazy">
-                        <div class="card-caption-banner">
-                            <p class="card-caption-title">The Sacred Union</p>
-                            <p class="card-caption-sub">24th November 2026</p>
-                        </div>
+                        <img class="card-img-blur" src="assets/moment_chapter5.jpg" alt="" aria-hidden="true">
+                        <img class="card-img-main" src="assets/moment_chapter5.jpg" alt="The Sacred Union - Chapter 05" loading="lazy">
                     </div>
-                    <div class="card-glare"></div>
                 </div>
             </div>
 
@@ -1721,7 +1678,7 @@ window.addEventListener('resize', () => {
     if (nextBtn) nextBtn.addEventListener('click', () => { next(); resetAutoPlay(); });
     if (prevBtn) prevBtn.addEventListener('click', () => { prev(); resetAutoPlay(); });
 
-    // Click card to navigate; active card has interactive tilt and glare
+    // Click card to navigate; active card has subtle smooth 3D tilt
     cards.forEach((card, i) => {
         card.addEventListener('click', (e) => {
             if (i !== current) {
@@ -1731,17 +1688,15 @@ window.addEventListener('resize', () => {
             }
         });
 
-        // Interactive 3D Tilt with Glare sheen
+        // Subtle tactile 3D tilt on mouse hover (no glare effect)
         card.addEventListener('mousemove', (e) => {
             if (i !== current || isDragging) return;
             const rect = card.getBoundingClientRect();
             const px = (e.clientX - rect.left) / rect.width;
             const py = (e.clientY - rect.top) / rect.height;
-            const rotateY = (px - 0.5) * 16;
-            const rotateX = (0.5 - py) * 16;
-            card.style.transform = `translate3d(0, 0, 95px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            card.style.setProperty('--mouse-x', `${px * 100}%`);
-            card.style.setProperty('--mouse-y', `${py * 100}%`);
+            const rotateY = (px - 0.5) * 10;
+            const rotateX = (0.5 - py) * 10;
+            card.style.transform = `translate3d(0, 0, 92px) scale(1.01) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
         card.addEventListener('mouseleave', () => {

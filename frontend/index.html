@@ -538,10 +538,10 @@
 
         .carousel-3d-container {
             width: 100%;
-            max-width: 900px;
-            margin: 3rem auto 0;
+            max-width: 960px;
+            margin: 3.5rem auto 0;
             position: relative;
-            perspective: 1100px;
+            perspective: 1200px;
             user-select: none;
             -webkit-user-select: none;
             touch-action: pan-y;
@@ -550,7 +550,7 @@
         .carousel-3d-stage {
             position: relative;
             width: 100%;
-            height: 480px;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -559,16 +559,16 @@
 
         .carousel-3d-card {
             position: absolute;
-            width: 300px;
-            max-width: 78vw;
-            height: 440px;
+            width: 320px;
+            max-width: 80vw;
+            height: 460px;
             border-radius: 2rem;
             background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 8px;
-            border: 1.5px solid rgba(201, 150, 62, 0.4);
-            box-shadow: 0 16px 40px rgba(92, 34, 51, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 9px;
+            border: 1.5px solid rgba(201, 150, 62, 0.45);
+            box-shadow: 0 18px 45px rgba(92, 34, 51, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.7);
             cursor: pointer;
             transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
                         opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
@@ -576,36 +576,41 @@
                         box-shadow 0.65s ease;
             will-change: transform, opacity;
             transform-origin: center center;
+            overflow: hidden;
         }
 
         .carousel-3d-card.pos-active {
-            transform: translate3d(0, 0, 80px) scale(1) rotateY(0deg);
+            transform: translate3d(0, 0, 90px) scale(1) rotateY(0deg);
             z-index: 10;
             opacity: 1;
             filter: drop-shadow(0 25px 50px rgba(184, 89, 64, 0.28));
-            border-color: rgba(201, 150, 62, 0.75);
-            box-shadow: 0 24px 50px rgba(184, 89, 64, 0.22), 0 0 20px rgba(201, 150, 62, 0.25);
+            border-color: rgba(201, 150, 62, 0.85);
+            box-shadow: 0 25px 60px rgba(184, 89, 64, 0.22), 0 0 25px rgba(201, 150, 62, 0.3);
             cursor: grab;
+        }
+
+        .carousel-3d-card.pos-active:active {
+            cursor: grabbing;
         }
 
         .carousel-3d-card.pos-prev {
             transform: translate3d(-52%, 0, -60px) scale(0.85) rotateY(16deg);
             z-index: 5;
             opacity: 0.72;
-            filter: blur(0.4px);
+            filter: blur(0.3px);
         }
 
         .carousel-3d-card.pos-next {
             transform: translate3d(52%, 0, -60px) scale(0.85) rotateY(-16deg);
             z-index: 5;
             opacity: 0.72;
-            filter: blur(0.4px);
+            filter: blur(0.3px);
         }
 
         .carousel-3d-card.pos-far-prev {
             transform: translate3d(-92%, 0, -140px) scale(0.7) rotateY(26deg);
             z-index: 2;
-            opacity: 0.3;
+            opacity: 0.28;
             filter: blur(1.5px);
             pointer-events: none;
         }
@@ -613,7 +618,7 @@
         .carousel-3d-card.pos-far-next {
             transform: translate3d(92%, 0, -140px) scale(0.7) rotateY(-26deg);
             z-index: 2;
-            opacity: 0.3;
+            opacity: 0.28;
             filter: blur(1.5px);
             pointer-events: none;
         }
@@ -625,6 +630,22 @@
             pointer-events: none;
         }
 
+        /* 3D Sheen / Glare reflection on card */
+        .card-glare {
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.5) 0%, transparent 60%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            mix-blend-mode: overlay;
+            z-index: 15;
+        }
+        .carousel-3d-card.pos-active:hover .card-glare {
+            opacity: 1;
+        }
+
         .card-inner-media {
             width: 100%;
             height: 100%;
@@ -634,32 +655,45 @@
             background: #1a0d08;
         }
 
-        .card-inner-media img,
-        .card-inner-media video {
+        .card-inner-media img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
             pointer-events: none;
+            transition: transform 0.6s ease;
+        }
+        .carousel-3d-card.pos-active:hover .card-inner-media img {
+            transform: scale(1.03);
         }
 
         .card-overlay-badge {
             position: absolute;
             top: 14px;
             left: 14px;
-            padding: 5px 12px;
-            background: rgba(255, 248, 243, 0.88);
+            padding: 5px 13px;
+            background: rgba(255, 248, 243, 0.92);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(201, 150, 62, 0.45);
+            border: 1px solid rgba(201, 150, 62, 0.5);
             border-radius: 9999px;
             font-family: 'Tenor Sans', sans-serif;
-            font-size: 0.6rem;
-            letter-spacing: 0.18em;
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--terracotta);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-overlay-badge .badge-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
         }
 
         .card-caption-banner {
@@ -667,8 +701,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 2.5rem 1.25rem 1.2rem;
-            background: linear-gradient(to top, rgba(26,13,8,0.85) 0%, rgba(26,13,8,0.4) 65%, transparent 100%);
+            padding: 3rem 1.25rem 1.35rem;
+            background: linear-gradient(to top, rgba(20,9,5,0.88) 0%, rgba(20,9,5,0.45) 60%, transparent 100%);
             color: white;
             z-index: 2;
             display: flex;
@@ -678,7 +712,7 @@
 
         .card-caption-title {
             font-family: 'Great Vibes', cursive;
-            font-size: 1.85rem;
+            font-size: 2rem;
             color: var(--gold-light);
             line-height: 1.1;
             margin: 0;
@@ -687,9 +721,9 @@
         .card-caption-sub {
             font-family: 'Tenor Sans', sans-serif;
             font-size: 0.65rem;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.88);
             margin: 0;
         }
 
@@ -697,13 +731,13 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(201, 150, 62, 0.45);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(201, 150, 62, 0.5);
             color: var(--terracotta);
             display: flex;
             align-items: center;
@@ -729,7 +763,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 9px;
             margin-top: 2rem;
             z-index: 15;
             position: relative;
@@ -739,23 +773,23 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: rgba(201, 150, 62, 0.3);
+            background: rgba(201, 150, 62, 0.35);
             border: none;
             padding: 0;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.2, 1, 0.3, 1);
         }
 
         .carousel-dot.active {
-            width: 26px;
+            width: 28px;
             border-radius: 9999px;
             background: var(--terracotta);
-            box-shadow: 0 2px 8px rgba(184, 89, 64, 0.4);
+            box-shadow: 0 2px 10px rgba(184, 89, 64, 0.45);
         }
 
         @media (max-width: 600px) {
-            .carousel-3d-stage { height: 430px; }
-            .carousel-3d-card { width: 270px; height: 395px; border-radius: 1.75rem; }
+            .carousel-3d-stage { height: 440px; }
+            .carousel-3d-card { width: 275px; height: 405px; border-radius: 1.75rem; }
             .carousel-3d-card.pos-prev { transform: translate3d(-46%, 0, -45px) scale(0.85) rotateY(14deg); }
             .carousel-3d-card.pos-next { transform: translate3d(46%, 0, -45px) scale(0.85) rotateY(-14deg); }
             .carousel-nav-btn { display: none; }
@@ -962,66 +996,69 @@
             </button>
 
             <div class="carousel-3d-stage" id="carouselStage">
-                <!-- Card 1: Cartoon Video / Portrait (The exact one from your screenshot) -->
+                <!-- Chapter 01: Couple in Regal Attire -->
                 <div class="carousel-3d-card" data-index="0">
-                    <span class="card-overlay-badge">Chapter 01</span>
+                    <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 01</span>
                     <div class="card-inner-media">
-                        <video autoplay loop muted playsinline poster="assets/moment_illustration.jpg">
-                            <source src="assets/memories.mp4" type="video/mp4">
-                        </video>
+                        <img src="assets/moment_chapter1.jpg" alt="Neha & Abhishek - Chapter 01" loading="eager">
                         <div class="card-caption-banner">
-                            <p class="card-caption-title">Neha & Abhishek</p>
-                            <p class="card-caption-sub">Forever In Love</p>
+                            <p class="card-caption-title">Two Souls, One Destiny</p>
+                            <p class="card-caption-sub">Neha & Abhishek</p>
                         </div>
                     </div>
+                    <div class="card-glare"></div>
                 </div>
 
-                <!-- Card 2: Engagement Promise -->
+                <!-- Chapter 02: Family Blessings & Parents -->
                 <div class="carousel-3d-card" data-index="1">
-                    <span class="card-overlay-badge">Chapter 02</span>
+                    <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 02</span>
                     <div class="card-inner-media">
-                        <img src="assets/moment_engagement.jpg" alt="Engagement Moment" loading="lazy">
+                        <img src="assets/moment_chapter2.jpg" alt="Family Blessings - Chapter 02" loading="lazy">
                         <div class="card-caption-banner">
-                            <p class="card-caption-title">A Sacred Promise</p>
-                            <p class="card-caption-sub">The Beginning of Forever</p>
+                            <p class="card-caption-title">Family & Blessings</p>
+                            <p class="card-caption-sub">Roots of Love & Tradition</p>
                         </div>
                     </div>
+                    <div class="card-glare"></div>
                 </div>
 
-                <!-- Card 3: Cherished Moments -->
+                <!-- Chapter 03: A Lifetime of Smiles -->
                 <div class="carousel-3d-card" data-index="2">
-                    <span class="card-overlay-badge">Chapter 03</span>
+                    <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 03</span>
                     <div class="card-inner-media">
-                        <img src="assets/moment_portrait.jpg" alt="Cherished Portrait" loading="lazy">
+                        <img src="assets/moment_chapter3.jpg" alt="A Lifetime of Smiles - Chapter 03" loading="lazy">
                         <div class="card-caption-banner">
-                            <p class="card-caption-title">Two Hearts</p>
-                            <p class="card-caption-sub">One Soul</p>
+                            <p class="card-caption-title">A Lifetime of Smiles</p>
+                            <p class="card-caption-sub">Forever By Your Side</p>
                         </div>
                     </div>
+                    <div class="card-glare"></div>
                 </div>
 
-                <!-- Card 4: Illustration Art -->
+                <!-- Chapter 04: Joyful Celebrations & Family -->
                 <div class="carousel-3d-card" data-index="3">
-                    <span class="card-overlay-badge">Chapter 04</span>
+                    <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 04</span>
                     <div class="card-inner-media">
-                        <img src="assets/moment_illustration.jpg" alt="Our Story Portrait" loading="lazy">
+                        <img src="assets/moment_chapter4.jpg" alt="Joyful Celebrations - Chapter 04" loading="lazy">
                         <div class="card-caption-banner">
-                            <p class="card-caption-title">Our Story</p>
-                            <p class="card-caption-sub">Written in the Stars</p>
+                            <p class="card-caption-title">Joyful Celebrations</p>
+                            <p class="card-caption-sub">Surrounded by Loved Ones</p>
                         </div>
                     </div>
+                    <div class="card-glare"></div>
                 </div>
 
-                <!-- Card 5: Royal Night -->
+                <!-- Chapter 05: The Sacred Union -->
                 <div class="carousel-3d-card" data-index="4">
-                    <span class="card-overlay-badge">Chapter 05</span>
+                    <span class="card-overlay-badge"><span class="badge-dot"></span>Chapter 05</span>
                     <div class="card-inner-media">
-                        <img src="assets/marriage_night.png" alt="Royal Wedding Night" loading="lazy">
+                        <img src="assets/moment_chapter5.jpg" alt="The Sacred Union - Chapter 05" loading="lazy">
                         <div class="card-caption-banner">
-                            <p class="card-caption-title">The Royal Union</p>
+                            <p class="card-caption-title">The Sacred Union</p>
                             <p class="card-caption-sub">24th November 2026</p>
                         </div>
                     </div>
+                    <div class="card-glare"></div>
                 </div>
             </div>
 
@@ -1615,7 +1652,7 @@ window.addEventListener('resize', () => {
 });
 
 /* ================================================================
-   3D CARD CAROUSEL (COVERFLOW DEPTH MOVEMENT)
+   3D CARD CAROUSEL (ULTRA-SMOOTH COVERFLOW DEPTH & INTERACTION)
 ================================================================ */
 (function init3DCardCarousel() {
     const stage = document.getElementById('carouselStage');
@@ -1636,7 +1673,7 @@ window.addEventListener('resize', () => {
         cards.forEach((_, i) => {
             const dot = document.createElement('button');
             dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-            dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+            dot.setAttribute('aria-label', 'Go to chapter ' + (i + 1));
             dot.addEventListener('click', () => { goTo(i); resetAutoPlay(); });
             dotsContainer.appendChild(dot);
         });
@@ -1645,6 +1682,7 @@ window.addEventListener('resize', () => {
     function update() {
         cards.forEach((card, i) => {
             card.classList.remove('pos-active', 'pos-prev', 'pos-next', 'pos-far-prev', 'pos-far-next', 'pos-hidden');
+            card.style.transform = ''; // reset any manual tilt
             let diff = (i - current) % total;
             if (diff < -Math.floor(total / 2)) diff += total;
             if (diff > Math.floor(total / 2)) diff -= total;
@@ -1670,17 +1708,6 @@ window.addEventListener('resize', () => {
                 dot.classList.toggle('active', i === current);
             });
         }
-
-        cards.forEach((card, i) => {
-            const video = card.querySelector('video');
-            if (video) {
-                if (i === current) {
-                    video.play().catch(() => {});
-                } else {
-                    video.pause();
-                }
-            }
-        });
     }
 
     function goTo(index) {
@@ -1694,6 +1721,7 @@ window.addEventListener('resize', () => {
     if (nextBtn) nextBtn.addEventListener('click', () => { next(); resetAutoPlay(); });
     if (prevBtn) prevBtn.addEventListener('click', () => { prev(); resetAutoPlay(); });
 
+    // Click card to navigate; active card has interactive tilt and glare
     cards.forEach((card, i) => {
         card.addEventListener('click', (e) => {
             if (i !== current) {
@@ -1702,8 +1730,28 @@ window.addEventListener('resize', () => {
                 resetAutoPlay();
             }
         });
+
+        // Interactive 3D Tilt with Glare sheen
+        card.addEventListener('mousemove', (e) => {
+            if (i !== current || isDragging) return;
+            const rect = card.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width;
+            const py = (e.clientY - rect.top) / rect.height;
+            const rotateY = (px - 0.5) * 16;
+            const rotateX = (0.5 - py) * 16;
+            card.style.transform = `translate3d(0, 0, 95px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            card.style.setProperty('--mouse-x', `${px * 100}%`);
+            card.style.setProperty('--mouse-y', `${py * 100}%`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            if (i === current) {
+                card.style.transform = '';
+            }
+        });
     });
 
+    // Touch & Swipe gestures with real-time responsive drag
     const container = document.getElementById('momentsCarousel');
     if (container) {
         container.addEventListener('touchstart', (e) => {
@@ -1716,11 +1764,16 @@ window.addEventListener('resize', () => {
         container.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             currentX = e.touches[0].clientX;
+            const deltaX = currentX - startX;
+            stage.style.transition = 'none';
+            stage.style.transform = `translate3d(${deltaX * 0.35}px, 0, 0)`;
         }, { passive: true });
 
         container.addEventListener('touchend', () => {
             if (!isDragging) return;
             isDragging = false;
+            stage.style.transition = 'transform 0.4s cubic-bezier(0.2, 1, 0.3, 1)';
+            stage.style.transform = 'translate3d(0, 0, 0)';
             const diffX = currentX - startX;
             if (Math.abs(diffX) > 40) {
                 if (diffX < 0) next();
@@ -1729,7 +1782,9 @@ window.addEventListener('resize', () => {
             resetAutoPlay();
         });
 
+        // Desktop mouse drag
         container.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.carousel-nav-btn') || e.target.closest('.carousel-dot')) return;
             isDragging = true;
             startX = e.clientX;
             currentX = startX;
@@ -1739,13 +1794,18 @@ window.addEventListener('resize', () => {
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             currentX = e.clientX;
+            const deltaX = currentX - startX;
+            stage.style.transition = 'none';
+            stage.style.transform = `translate3d(${deltaX * 0.35}px, 0, 0)`;
         });
 
         window.addEventListener('mouseup', () => {
             if (!isDragging) return;
             isDragging = false;
+            stage.style.transition = 'transform 0.4s cubic-bezier(0.2, 1, 0.3, 1)';
+            stage.style.transform = 'translate3d(0, 0, 0)';
             const diffX = currentX - startX;
-            if (Math.abs(diffX) > 50) {
+            if (Math.abs(diffX) > 45) {
                 if (diffX < 0) next();
                 else prev();
             }
@@ -1756,8 +1816,17 @@ window.addEventListener('resize', () => {
         container.addEventListener('mouseleave', startAutoPlay);
     }
 
+    // Keyboard navigation when visible
+    window.addEventListener('keydown', (e) => {
+        const rect = container ? container.getBoundingClientRect() : null;
+        if (rect && rect.top < window.innerHeight && rect.bottom > 0) {
+            if (e.key === 'ArrowRight') { next(); resetAutoPlay(); }
+            if (e.key === 'ArrowLeft') { prev(); resetAutoPlay(); }
+        }
+    });
+
     function startAutoPlay() {
-        if (!autoPlayTimer) autoPlayTimer = setInterval(next, 5000);
+        if (!autoPlayTimer) autoPlayTimer = setInterval(next, 5200);
     }
     function stopAutoPlay() {
         if (autoPlayTimer) { clearInterval(autoPlayTimer); autoPlayTimer = null; }
